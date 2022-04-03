@@ -33,29 +33,52 @@ class AnswerClass {
     console.log(this.decimalPointClick)
   }
 
-  public ok(type: string) {
-    if (type == "add") {
-      Type = "add"
-      upNumber = this.getValue()
+  public ok(type: String) {
+    if (type !== "epual") {
+      Type = type
+      //upNumber = this.getValue()
+      this.add(type)
     }
 
     if (type == "epual") {
-      if (this.el !== null) {
-        if (Type == "add"){
-          this.el.innerHTML = String(upNumber + this.getValue())
-          Type = "epual"
-        }
-      }
+      this.add(type)
     }
+    
 
     if(this.el !== null && type !== "epual") {
       this.el.innerHTML = "0"
     }
   }
+
+  private add(type: String) {
+    if (this.el !== null) {
+      if (upType == "add"){
+        this.el.innerHTML = String(upNumber + this.getValue())
+        upNumber = this.getValue()
+      }
+      if (upType == "reduce") {
+        this.el.innerHTML = String(upNumber - this.getValue())
+        upNumber = this.getValue()
+      }
+      if (upType == "take") {
+        this.el.innerHTML = String(upNumber * this.getValue())
+        upNumber = this.getValue()
+      }
+      if (upType == "remove") {
+        this.el.innerHTML = String(upNumber / this.getValue())
+        upNumber = this.getValue()
+      }
+      upNumber = this.getValue()
+      upType = Type
+      Type = type
+      }
+    }
+  
 }
 
 let upNumber: number = 0;
-let Type: string = "none"
+let Type: String = "none"
+let upType:String = "none";
 
 /**
  * onload
@@ -72,6 +95,7 @@ window.addEventListener("load", function () {
       if (answerObj.el && Type == "epual") {
         answerObj.el.innerHTML = "0"
         Type = "none"
+        upType = "none"
       }
       const valueAttr = evt.target.getAttribute("value");
       const numValueAttr = Number(valueAttr);
@@ -96,5 +120,20 @@ window.addEventListener("load", function () {
   const epual = document.getElementById("epual")
   epual?.addEventListener("click" , function (evn: Event) {
     answerObj.ok("epual");
+  })
+
+  const reduce = document.getElementById("reduce")
+  reduce?.addEventListener("click" , function (evn: Event) {
+    answerObj.ok("reduce");
+  })
+
+  const take = document.getElementById("take")
+  take?.addEventListener("click" , function (evn: Event) {
+    answerObj.ok("take");
+  })
+
+  const remove = document.getElementById("remove")
+  remove?.addEventListener("click" , function (evn: Event) {
+    answerObj.ok("remove");
   })
 });
